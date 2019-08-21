@@ -4,16 +4,13 @@ import subprocess
 
 def pose_estimation(outpath, outanns):
 
-    for i,(dire, folds, fils) in enumerate(os.walk(outpath)):
+    for i,(directory, fold, files) in enumerate(os.walk(outpath)):
         # run command on the frames
-        if len(folds) == 0 and len(fils) > 0:
+        if len(fold) == 0 and len(files) > 0:
             # loop over video frames
-            print('Processing video frames in: {}'.format(dire))
+            print('Processing video frames in: {}'.format(directory))
 
-            # run a python module and output the json file at the corresponding annotation folder
-            ldir = dire.split('/')
-            out_json = os.path.join(outanns, ldir[-2], ldir[-1])
-            if not os.path.isdir(out_json):
-                os.makedirs(out_json)
-            cmd = "python demo.py --indir {}  --outdir {}".format(dire, out_json)
+            # run a python module 
+            ldir = directory.split('/')
+            cmd = "python demo.py --indir {}".format(directory)
             subprocess.call(cmd , shell=True)
